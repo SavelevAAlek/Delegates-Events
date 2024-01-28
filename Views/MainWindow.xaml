@@ -4,9 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Delegates_Events"
+        xmlns:vm="clr-namespace:Delegates_Events.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0"
+                 ItemsSource="{Binding ClientsList}"
+                 SelectedItem="{Binding SelectedClient}"
+                 DisplayMemberPath="Name"/>
+
+        <UserControl Grid.Column="1"
+                     Content="{Binding AccountViewModel}"/>
+
 
     </Grid>
 </Window>

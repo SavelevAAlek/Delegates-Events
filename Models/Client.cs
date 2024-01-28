@@ -7,6 +7,7 @@ namespace Delegates_Events.Models
         public string Name { get; set; }
         public List<IAccount<object>> Accounts { get; set; }
 
+        public Client(string name, List<IAccount<object>> accounts) { Name = name; Accounts = accounts; }
         public void CreateNewAccount(int id, string name, decimal amount)
         {
             switch (name)
@@ -18,7 +19,6 @@ namespace Delegates_Events.Models
         }
 
         public void DeleteAccount(IAccount<object> selectedAccount) => Accounts.Remove(selectedAccount);
-
 
     }
 }
