@@ -10,7 +10,7 @@ namespace Delegates_Events.ViewModels
         private Client _selectedClient;
         private ObservableCollection<Client> _clientsList;
         private ViewModelBase _accountViewModel;
-        private List<IAccount<object>> _accountsList;
+        private ObservableCollection<IAccount<object>> _accountsList;
 
         public Client SelectedClient
         {
@@ -18,6 +18,8 @@ namespace Delegates_Events.ViewModels
             set
             {
                 SetProperty(ref _selectedClient, value);
+
+                foreach (var account in _selectedClient.Accounts) _accountsList.Remove(account);
                 _accountViewModel = new AccountViewModel(SelectedClient, _accountsList);
                 OnPropertyChanged(nameof(AccountViewModel));
             }
@@ -41,15 +43,12 @@ namespace Delegates_Events.ViewModels
                 }),
             };
 
-            _accountsList = new List<IAccount<object>>();
+            _accountsList = new ObservableCollection<IAccount<object>>();
 
             foreach (var client in ClientsList)
             {
-                foreach (var account in client.Accounts)
-                {
-                    _accountsList.Add(account);
-                }
-            };
+                foreach (var acc in client.Accounts) _accountsList.Add(acc);
+            }
         }
     }
 }

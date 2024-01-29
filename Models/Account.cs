@@ -1,10 +1,27 @@
-﻿namespace Delegates_Events.Models
+﻿using Delegates_Events.ViewModels.Base;
+
+namespace Delegates_Events.Models
 {
-    public class Account<T> : IAccount<T>
+    public delegate void AccountHandler(string message);
+
+    public class Account<T> : ViewModelBase, IAccount<T>
     {
+        private decimal _amount;
+
+        public event AccountHandler Notify;
         public int Id { get; set; }
+        /// <summary>
+        /// Тип аккаунта
+        /// </summary>
         public virtual string Name { get; set; }
-        public decimal Amount { get; set; }
+        /// <summary>
+        /// Сумма средств на балансе
+        /// </summary>
+        public decimal Amount { get => _amount; set => SetProperty(ref _amount, value); }
+        /// <summary>
+        /// Св-во для отображения получателя
+        /// </summary>
+        public string Recipient { get => $"Счет №{Id} ({Name})"; }
 
         public Account() { }
         public Account(int id, string name, decimal amount)
@@ -14,8 +31,22 @@
             Amount = amount;
         }
 
-        public void TopUp(decimal amount) => Amount += amount;
-
+        /// <summary>
+        /// Пополнение баланса
+        /// </summary>
+        /// <param name="amount"></param>
+        public void TopUp(decimal amount)
+        {
+            Amount += amount;
+            Notify?.Invoke($"Баланс пополнен на {amount} Р\n");
+        }
+        /// <summary>
+        /// Перевод средств на выбранный счет
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="account"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public string Transfer<K>(IAccount<K> account, decimal amount)
         {
             if (amount > Amount)
@@ -26,10 +57,15 @@
             {
                 account.Amount += amount;
                 Amount -= amount;
+                Notify?.Invoke($"Выполнен перевод на сумму {amount} Р\n");
                 return new string("Операция выполнена успешно");
             }
         }
-
+        /// <summary>
+        /// Снятие средств со счета
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public string Withdraw(decimal amount)
         {
             if (amount > Amount)
@@ -42,16 +78,6 @@
                 return new string("Операция выполнена успешно");
             }
         }
-    }
-
-    public interface IAccount<out T>
-    {
-        int Id { get; set; }
-        string Name { get; set; }
-        decimal Amount { get; set; }
-        void TopUp(decimal amoont);
-        string Transfer<K>(IAccount<K> account, decimal amount);
-        string Withdraw(decimal amount);
     }
 
     public class DepositAccount : Account<DepositAccount>

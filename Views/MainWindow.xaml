@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Delegates_Events"
         xmlns:vm="clr-namespace:Delegates_Events.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="900">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -19,7 +19,7 @@
         <ListBox Grid.Column="0"
                  ItemsSource="{Binding ClientsList}"
                  SelectedItem="{Binding SelectedClient}"
-                 DisplayMemberPath="Name"/>
+                 DisplayMemberPath="ClientName"/>
 
         <UserControl Grid.Column="1"
                      Content="{Binding AccountViewModel}"/>

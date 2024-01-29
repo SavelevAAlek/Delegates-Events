@@ -9,8 +9,5 @@
         <DataTemplate DataType="{x:Type vm:AccountViewModel}">
             <v:AccountView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:LogViewModel}">
-            <v:LogView/>
-        </DataTemplate>
     </Application.Resources>
 </Application>

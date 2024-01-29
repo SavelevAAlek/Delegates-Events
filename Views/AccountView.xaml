@@ -62,7 +62,7 @@
                     <TextBlock Text="Получатель:"/>
                     <ComboBox ItemsSource="{Binding AccountsList}"
                               SelectedItem="{Binding AccountToTransfer, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Id"/>
+                              DisplayMemberPath="Recipient"/>
                     <TextBlock Text="Счет списания:"/>
                     <ComboBox ItemsSource="{Binding Accounts}"
                               SelectedItem="{Binding AccountFromTransfer, UpdateSourceTrigger=PropertyChanged}"
@@ -74,7 +74,31 @@
                 </StackPanel>
 
             </GroupBox>
+            <GroupBox Header="Добавление счета">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Выберите тип:"/>
+                    <ComboBox SelectedItem="{Binding NewAccountType}">
+                        <ComboBoxItem Content="Депозитный"/>
+                        <ComboBoxItem Content="Не депозитный"/>
+                    </ComboBox>
+                    <Button Content="Открыть счет" Command="{Binding OpenCommand}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Закрытие счета">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Выберите счет:"/>
+                    <ComboBox ItemsSource="{Binding Accounts}" 
+                              SelectedItem="{Binding SelectedAccount}"
+                              DisplayMemberPath="Id"/>
+                    <Button Content="Закрыть счет" Command="{Binding CloseCommand}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Журнал операций">
+                <TextBlock Text="{Binding Notification}"
+                           FontSize="16"/>
+            </GroupBox>
         </StackPanel>
+        
         
     </Grid>
 </UserControl>
