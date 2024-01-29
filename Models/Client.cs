@@ -1,5 +1,4 @@
-﻿using Delegates_Events.ViewModels.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Delegates_Events.Models
 {

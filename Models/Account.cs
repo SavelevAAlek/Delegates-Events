@@ -1,4 +1,5 @@
-﻿using Delegates_Events.ViewModels.Base;
+﻿using Delegates_Events.Infrastructure;
+using ViewModelLibrary;
 
 namespace Delegates_Events.Models
 {
@@ -49,16 +50,18 @@ namespace Delegates_Events.Models
         /// <returns></returns>
         public string Transfer<K>(IAccount<K> account, decimal amount)
         {
-            if (amount > Amount)
+
+            try
             {
-                return new string("Недостаточно средств на балансе");
-            }
-            else
-            {
+                if (amount > Amount) { throw new NotEnoughMoneyException("Недостаточно средств на счете"); }
                 account.Amount += amount;
                 Amount -= amount;
                 Notify?.Invoke($"Выполнен перевод на сумму {amount} Р\n");
-                return new string("Операция выполнена успешно");
+                return new string($"Выполнен перевод на сумму {amount} Р\n");
+            }
+            catch(NotEnoughMoneyException ex)
+            {
+                return ex.Message;
             }
         }
         /// <summary>

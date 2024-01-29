@@ -1,7 +1,7 @@
 ﻿using Delegates_Events.Models;
-using Delegates_Events.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ViewModelLibrary;
 
 namespace Delegates_Events.ViewModels
 {

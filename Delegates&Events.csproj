@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="ViewModelLib">
+      <HintPath>..\Client\bin\Debug\net6.0\ViewModelLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
